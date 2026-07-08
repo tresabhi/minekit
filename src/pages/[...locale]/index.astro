@@ -1,0 +1,16 @@
+---
+import type { GetStaticPaths } from "astro";
+import locales from "../../lang/locales.json";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export const getStaticPaths = (() => {
+  return Object.keys(locales.locales).map((id) => ({
+    params: { locale: id === locales.default ? undefined : id },
+    props: { locale: id },
+  }));
+}) satisfies GetStaticPaths;
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout {locale} />
