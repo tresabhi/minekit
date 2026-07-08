@@ -6,10 +6,10 @@ env:
   VERSION_MANIFEST: https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
 
   # project
-  CLIENT: temp/client
+  GAME: temp/game
 
   # workflow
-  CLIENT_TYPE: snapshot
+  GAME_VERSION_TYPE: snapshot
 
 jobs:
   build:
@@ -26,10 +26,11 @@ jobs:
         run: |
           sudo apt update
           sudo apt install libarchive-tools
+
           bun install
 
       - name: Setup client
-        run: bun setup-client ${{ env.CLIENT_TYPE }}
+        run: bun setup-client ${{ env.GAME_VERSION_TYPE }}
 
       - name: Build
         run: bun run build

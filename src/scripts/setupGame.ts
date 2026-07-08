@@ -20,7 +20,7 @@ if (!Object.values(VersionType).includes(type)) {
   exit(1);
 }
 
-await rm(secret("CLIENT"), { recursive: true, force: true });
+await rm(secret("GAME"), { recursive: true, force: true });
 
 const versionManifest = await fetch(secret("VERSION_MANIFEST")).then(
   (response) => response.json() as Promise<VersionManifest>,
@@ -38,6 +38,9 @@ const versionPackage = await fetch(version.url).then(
   (response) => response.json() as Promise<VersionPackage>,
 );
 
-await mkdir(secret("CLIENT"), { recursive: true });
+await mkdir(`${secret("GAME")}/client`, { recursive: true });
+await mkdir(`${secret("GAME")}/report`);
 
-await $`curl -L ${versionPackage.downloads.client.url} | bsdtar -xf - -C ${secret("CLIENT")}`;
+await $`curl -L ${versionPackage.downloads.client.url} | bsdtar -xf - -C ${secret("GAME")}/client`;
+await $`curl -L ${versionPackage.downloads.server.url} -o ${secret("GAME")}/server.jar`;
+await $`cd ${secret("GAME")}/report && java -DbundlerMainClass=net.minecraft.data.Main -jar ../server.jar --reports`;

@@ -1,4 +1,4 @@
-export type WellKnownSecret = "VERSION_MANIFEST" | "CLIENT";
+export type WellKnownSecret = "VERSION_MANIFEST" | "GAME";
 
 export function secret(name: WellKnownSecret) {
   if (name in import.meta.env) {
