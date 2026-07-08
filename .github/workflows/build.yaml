@@ -22,6 +22,12 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 25
+
       - name: Install dependencies project
         run: |
           sudo apt update
@@ -29,8 +35,8 @@ jobs:
 
           bun install
 
-      - name: Setup client
-        run: bun setup-client ${{ env.GAME_VERSION_TYPE }}
+      - name: Setup game
+        run: bun setup-game ${{ env.GAME_VERSION_TYPE }}
 
       - name: Build
         run: bun run build
