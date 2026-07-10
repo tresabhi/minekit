@@ -1,11 +1,20 @@
+import { readdir } from "node:fs/promises";
 import { assertSSR } from "../astro/assertSSR";
 import { secret } from "../secrets/secret";
 
 class GameVFS {
   constructor(private base: string) {}
 
+  path(relative: string) {
+    return `${this.base}/${relative}`;
+  }
+
+  dir(path: string) {
+    return readdir(this.path(path));
+  }
+
   file(path: string) {
-    return Bun.file(`${this.base}/${path}`);
+    return Bun.file(this.path(path));
   }
 
   json<Type>(path: string) {
@@ -15,4 +24,4 @@ class GameVFS {
 
 assertSSR();
 
-export const game = new GameVFS(secret("GAME"));
+export const vfs = new GameVFS(secret("GAME"));

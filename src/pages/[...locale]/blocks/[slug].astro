@@ -1,0 +1,15 @@
+---
+import { mixStaticPaths } from "../../../astro/mixStaticPaths";
+import { blockSlugs } from "../../../game/blocks";
+import { getStaticPaths as _getStaticPaths } from "../index.astro";
+
+import "../../../game/tags";
+
+export const getStaticPaths = mixStaticPaths(_getStaticPaths, () =>
+  blockSlugs.map(({ slug, id }) => ({ params: { slug }, props: { id } })),
+);
+
+const { locale, id } = Astro.props;
+---
+
+{locale}{" "}{id}

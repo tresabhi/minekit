@@ -1,7 +1,7 @@
 import { sluggify } from "../astro/sluggify";
 import { gameStrings } from "../i18n/gameStrings";
 import locales from "../i18n/locales.json";
-import { unqualify } from "../minecraft/unqualify";
+import { unqualify } from "./unqualify";
 import type { DiscriminatedSlugs } from "../types/discriminatedSlugs";
 import { registry } from "./registries";
 

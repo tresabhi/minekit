@@ -1,11 +1,11 @@
-import { game } from "../game/vfs";
+import { vfs } from "../game/vfs";
 import locales from "../i18n/locales.json";
 import type { GameStrings } from "../types/gameStrings";
 
 export async function gameStrings(locale: string, group: string) {
   const minecraftLocale =
     locales.locales[locale as keyof typeof locales.locales].minecraft;
-  const strings = await game.json<GameStrings>(
+  const strings = await vfs.json<GameStrings>(
     `client/assets/minecraft/lang/${minecraftLocale}.json`,
   );
 

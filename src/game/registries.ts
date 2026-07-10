@@ -1,4 +1,4 @@
-import { game } from "./vfs";
+import { vfs } from "./vfs";
 
 type Registries = Record<string, Registry>;
 
@@ -12,7 +12,7 @@ interface Entry {
   protocol_id: number;
 }
 
-const registries = await game.json<Registries>(
+const registries = await vfs.json<Registries>(
   "report/generated/reports/registries.json",
 );
 
