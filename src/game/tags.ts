@@ -1,64 +1,78 @@
 import type { Tags } from "../types/tags";
 import { vfs } from "./vfs";
 
-const duplicateTags = new Map<string, string[]>();
+const root = "client/data/minecraft/tags";
+const groups = new Map<string, Map<string, Set<string>>>();
 
-async function traverse(root: string, parent: string) {
-  const items = await vfs.dir(root);
-  const hasDirectTags = items.some((item) => item.endsWith(".json"));
+for (const group of await vfs.dir(root)) {
+  const path = `${root}/${group}`;
+  const items = await vfs.dir(path);
+  const hasImmediateTags = items.some((item) => item.endsWith(".json"));
+  const tagPaths = new Map<string, string>();
 
-  for (const item of items) {
-    if (item.endsWith(".json")) {
-      const name = item.replace(".json", "");
-      const id = `${parent}${name}`;
-      console.log(id);
-      const sanitizedRoot = root.replace(parent, "").slice(0, -1);
+  async function collectTags(path: string, parent: string) {
+    const items = await vfs.dir(path);
 
-      if (duplicateTags.has(id)) {
-        duplicateTags.get(id)!.push(sanitizedRoot);
-      } else {
-        duplicateTags.set(id, [sanitizedRoot]);
+    for (const item of items) {
+      if (item.endsWith(".json")) {
+        const name = item.replace(".json", "");
+        tagPaths.set(`${parent}${name}`, `${path}${item}`);
+        continue;
       }
-    } else {
-      await traverse(
-        `${root}${item}/`,
-        hasDirectTags ? `${parent}${item}/` : "",
-      );
+
+      await collectTags(`${path}${item}/`, `${parent}${item}/`);
     }
   }
-}
 
-await traverse("client/data/minecraft/tags/", "");
+  if (hasImmediateTags) {
+    await collectTags(`${path}/`, "");
+  } else {
+    let hasDuplicateChildren = false;
+    const children = new Set<string>();
 
-for (const [id, roots] of duplicateTags) {
-  if (roots.length === 1) continue;
+    for (const item of items) {
+      for (const subItem of await vfs.dir(`${path}/${item}`)) {
+        const hasChild = children.has(subItem);
+        children.add(subItem);
+        hasDuplicateChildren ||= hasChild;
+        if (hasChild) break;
+      }
+    }
 
-  duplicateTags.delete(id);
-
-  for (const root of roots) {
-    const split = root.split("/");
-    const immediateParent = split.at(-1)!;
-    const remainingRoot = split.slice(0, -1).join("/");
-    const newId = `${immediateParent}/${id}`;
-
-    if (duplicateTags.has(newId)) {
-      duplicateTags.get(newId)!.push(remainingRoot);
+    if (hasDuplicateChildren) {
+      await collectTags(`${path}/`, "");
     } else {
-      duplicateTags.set(newId, [remainingRoot]);
+      for (const item of items) {
+        await collectTags(`${path}/${item}/`, "");
+      }
     }
   }
-}
 
-const tags = new Map<string, string[]>();
+  const tags = new Map<string, Set<string>>();
 
-for (const [idRaw, roots] of duplicateTags) {
-  if (roots.length !== 1) {
-    throw new Error(`De-duplication not resolved in 1 iteration for ${idRaw}`);
+  for (const [tag, path] of tagPaths) {
+    const { values: ids } = await vfs.json<Tags>(path);
+    tags.set(`#minecraft:${tag}`, new Set(ids));
   }
 
-  const id = `#minecraft:${idRaw}`;
-  const path = `${roots[0]}/${idRaw}.json`;
-  const data = await vfs.json<Tags>(path);
+  function flatten(tag: string) {
+    let flattened = new Set<string>();
 
-  tags.set(id, data.values);
+    for (const id of tags.get(tag)!) {
+      if (!id.startsWith("#")) {
+        flattened.add(id);
+        continue;
+      }
+
+      flattened = flattened.union(flatten(id));
+    }
+
+    return flattened;
+  }
+
+  for (const [tag] of tags) {
+    tags.set(tag, flatten(tag));
+  }
+
+  groups.set(group, tags);
 }
