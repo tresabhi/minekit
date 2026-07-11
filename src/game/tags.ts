@@ -76,3 +76,24 @@ for (const group of await vfs.dir(root)) {
 
   groups.set(group, tags);
 }
+
+export function tags(group: string) {
+  const tags = groups.get(group)!;
+
+  function tag(tag: string) {
+    return tags.get(tag)!;
+  }
+
+  function applies(id: string) {
+    const applies = new Set<string>();
+
+    for (const [tag, ids] of tags) {
+      if (!ids.has(id)) continue;
+      applies.add(tag);
+    }
+
+    return applies;
+  }
+
+  return { tags, tag, applies };
+}
