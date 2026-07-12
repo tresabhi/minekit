@@ -1,0 +1,34 @@
+---
+import { mixStaticPaths } from "../../../astro/mixStaticPaths";
+import { getStaticPaths as _getStaticPaths } from "../index.astro";
+
+import { itemSlugs } from "../../../game/slugs";
+import "../../../game/tags";
+import { tags } from "../../../game/tags";
+import { unqualify } from "../../../game/unqualify";
+import { vfs } from "../../../game/vfs";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+export const getStaticPaths = mixStaticPaths(_getStaticPaths, () =>
+  itemSlugs.map(({ slug, id }) => ({ params: { slug }, props: { id } })),
+);
+
+const { locale, id } = Astro.props;
+const { applies } = tags("item");
+
+const unqualified = unqualify(id);
+
+const components = await vfs.components(unqualified);
+const gameStrings = await vfs.strings(locale);
+const itemNameComponent = components.component("minecraft:item_name");
+---
+
+<BaseLayout {locale}>
+  <h1>
+    {gameStrings.get(itemNameComponent.translate)}
+  </h1>
+
+  <br />
+
+  {applies(id)}
+</BaseLayout>

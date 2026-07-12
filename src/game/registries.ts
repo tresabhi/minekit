@@ -17,5 +17,6 @@ const registries = await vfs.json<Registries>(
 );
 
 export function registry(name: string) {
-  return Object.keys(registries[name].entries);
+  if (name in registries) return Object.keys(registries[name].entries);
+  throw new Error(`Registry ${name} doesn't exist`);
 }
