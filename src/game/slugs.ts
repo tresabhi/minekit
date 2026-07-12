@@ -21,7 +21,7 @@ for (const id of registry("minecraft:block")) {
 for (const id of registry("minecraft:item")) {
   const unqualified = unqualify(id);
   const components = await vfs.components(unqualified);
-  const itemName = components.component("minecraft:item_name");
+  const itemName = components.get("minecraft:item_name");
   const name = strings.get(itemName.translate);
   const slug = sluggify(name);
 

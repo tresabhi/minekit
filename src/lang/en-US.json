@@ -1,7 +1,9 @@
 {
   "items": {
-    "facts": {
-      "title": "Facts"
+    "sections": {
+      "technical": {
+        "title": "Technical"
+      }
     }
   }
 }

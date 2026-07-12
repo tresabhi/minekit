@@ -13,7 +13,7 @@ interface ItemNameComponent {
 }
 
 interface FoodComponent {
-  can_always_eat?: boolean;
   nutrition: number;
   saturation: number;
+  can_always_eat?: boolean;
 }

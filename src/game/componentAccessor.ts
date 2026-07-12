@@ -5,7 +5,7 @@ import type {
 } from "../types/components";
 
 export class ComponentAccessor {
-  components: Partial<ComponentsMap>;
+  private components: Partial<ComponentsMap>;
 
   constructor(
     components: Components,
@@ -14,7 +14,11 @@ export class ComponentAccessor {
     this.components = components.components;
   }
 
-  component<Name extends ComponentName>(name: Name): ComponentsMap[Name] {
+  has(name: ComponentName) {
+    return name in this.components;
+  }
+
+  get<Name extends ComponentName>(name: Name): ComponentsMap[Name] {
     const component = this.components[name];
 
     if (component !== undefined) {

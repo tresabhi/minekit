@@ -1,0 +1,14 @@
+---
+import ItemSectionTechnical from "../components/ItemSectionTechnical.astro";
+
+export const itemSections = [
+  {
+    name: "technical",
+    renderer: ItemSectionTechnical,
+
+    shouldRender() {
+      return true;
+    },
+  },
+];
+---

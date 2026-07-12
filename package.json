@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "astro": "astro",
-    "setup-game": "bun src/scripts/setupGame.ts"
+    "setup-game": "bun src/scripts/setupGame.ts",
+    "collect-components": "bun src/scripts/collectComponents.ts"
   },
   "dependencies": {
     "@radix-ui/colors": "^3.0.0",

@@ -6,7 +6,9 @@ import "../../../game/tags";
 import { tags } from "../../../game/tags";
 import { unqualify } from "../../../game/unqualify";
 import { vfs } from "../../../game/vfs";
+import { getStrings } from "../../../i18n/getStrings";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { itemSections } from "../../../ui/itemSections.astro";
 import { getStaticPaths as _getStaticPaths } from "../index.astro";
 
 export const getStaticPaths = mixStaticPaths(_getStaticPaths, () =>
@@ -20,7 +22,9 @@ const unqualified = unqualify(id);
 
 const components = await vfs.components(unqualified);
 const gameStrings = await vfs.strings(locale);
-const itemNameComponent = components.component("minecraft:item_name");
+const itemNameComponent = components.get("minecraft:item_name");
+
+const strings = await getStrings(locale);
 ---
 
 <BaseLayout {locale}>
@@ -28,7 +32,22 @@ const itemNameComponent = components.component("minecraft:item_name");
     {gameStrings.get(itemNameComponent.translate)}
   </Heading>
 
-  <br />
+  {
+    itemSections.map((section) => {
+      if (!section.shouldRender()) return null;
+      return (
+        <div class="item-section">
+          <Heading size="2">
+            {
+              strings.items.sections[
+                section.name as keyof typeof strings.items.sections
+              ].title
+            }
+          </Heading>
 
-  {applies(id)}
+          <section.renderer {locale} />
+        </div>
+      );
+    })
+  }
 </BaseLayout>
