@@ -41,7 +41,7 @@ const gameString = await vfs.strings(locale);
       blockSlugs.map(({ id, slug }) => {
         return (
           <Link href={`/blocks/${slug}`}>
-            {gameString.string(`block.minecraft.${unqualify(id)}`)}
+            {gameString.get(`block.minecraft.${unqualify(id)}`)}
           </Link>
         );
       })
@@ -54,9 +54,7 @@ const gameString = await vfs.strings(locale);
     {
       itemSlugs.map(({ id, slug }) => {
         return (
-          <Link href={`/items/${slug}`}>
-            {gameString.string(unqualify(id))}
-          </Link>
+          <Link href={`/items/${slug}`}>{gameString.get(unqualify(id))}</Link>
         );
       })
     }

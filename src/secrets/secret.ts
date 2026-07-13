@@ -5,5 +5,5 @@ export function secret(name: WellKnownSecret) {
     return import.meta.env[name]!;
   }
 
-  throw new Error(`Secret ${name} not found`);
+  throw new Error(`Secret "${name}" not found`);
 }
