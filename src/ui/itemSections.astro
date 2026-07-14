@@ -1,7 +1,18 @@
 ---
+import ItemSectionConsumable from "../components/ItemSectionConsumable.astro";
 import ItemSectionTechnical from "../components/ItemSectionTechnical.astro";
+import type { ItemSectionConfig } from "../types/itemSectionConfig";
 
-export const itemSections = [
+export const itemSections: ItemSectionConfig[] = [
+  {
+    name: "consumable",
+    renderer: ItemSectionConsumable,
+
+    async shouldRender({ id, components }) {
+      return components.has("minecraft:consumable");
+    },
+  },
+
   {
     name: "technical",
     renderer: ItemSectionTechnical,

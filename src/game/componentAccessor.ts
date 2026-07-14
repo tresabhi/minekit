@@ -18,8 +18,12 @@ export class ComponentAccessor {
     return name in this.components;
   }
 
-  get<Name extends ComponentName>(name: Name): ComponentsMap[Name] {
-    const component = this.components[name];
+  tryGet<Name extends ComponentName>(name: Name) {
+    return this.components[name];
+  }
+
+  get<Name extends ComponentName>(name: Name) {
+    const component = this.tryGet(name);
 
     if (component !== undefined) {
       return component;

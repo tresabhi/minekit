@@ -1,19 +1,14 @@
+import type { ConsumableComponent } from "./components/consumable";
+import type { FoodComponent } from "./components/food";
+import type { ItemNameComponent } from "./components/item_name";
+
 export interface Components {
   components: Partial<ComponentsMap>;
 }
 export type ComponentName = keyof ComponentsMap;
 
 export interface ComponentsMap {
-  "minecraft:item_name": ItemNameComponent;
+  "minecraft:consumable": ConsumableComponent;
   "minecraft:food": FoodComponent;
-}
-
-interface ItemNameComponent {
-  translate: string;
-}
-
-interface FoodComponent {
-  nutrition: number;
-  saturation: number;
-  can_always_eat?: boolean;
+  "minecraft:item_name": ItemNameComponent;
 }

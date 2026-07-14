@@ -1,6 +1,11 @@
 {
   "items": {
     "sections": {
+      "consumable": {
+        "title": "Consumable",
+        "body": "The {name} can be consumed."
+      },
+
       "technical": {
         "title": "Technical Jargon",
         "tags": "Tags",

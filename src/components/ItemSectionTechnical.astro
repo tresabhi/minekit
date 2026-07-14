@@ -1,7 +1,5 @@
 ---
 import { TagAccessor } from "../game/tagAccessor";
-import { unqualify } from "../game/unqualify";
-import { vfs } from "../game/vfs";
 import { getStrings } from "../i18n/getStrings";
 import type { ItemSectionProps } from "../types/itemSectionProps";
 import Badge from "./Badge.astro";
@@ -11,12 +9,10 @@ import Text from "./Text.astro";
 
 type Props = ItemSectionProps;
 
-const { locale, id } = Astro.props;
-const unqualified = unqualify(id);
+const { locale, id, components } = Astro.props;
 
 const strings = await getStrings(locale);
 const itemTags = new TagAccessor("item");
-const components = await vfs.components(unqualified);
 
 const formattedTags = itemTags
   .applied(id)
@@ -27,7 +23,7 @@ const formattedComponents = components
 ---
 
 {
-  formattedTags && (
+  formattedTags.length > 0 && (
     <Flex column gap="1">
       <Text>{strings.items.sections.technical.tags}</Text>
 

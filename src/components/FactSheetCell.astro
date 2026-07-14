@@ -1,0 +1,24 @@
+---
+interface Props {
+  key?: boolean;
+  value?: boolean;
+}
+
+const { key, value } = Astro.props;
+---
+
+{
+  key && (
+    <th>
+      <slot />
+    </th>
+  )
+}
+
+{
+  value && (
+    <td>
+      <slot />
+    </td>
+  )
+}

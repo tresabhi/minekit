@@ -1,0 +1,30 @@
+---
+import type { ItemSectionProps } from "../types/itemSectionProps";
+import FactSheetCell from "./FactSheetCell.astro";
+import FactSheetRoot from "./FactSheetRoot.astro";
+import FactSheetRow from "./FactSheetRow.astro";
+
+type Props = ItemSectionProps;
+
+const { components } = Astro.props;
+
+const consumable = components.get("minecraft:consumable");
+const food = components.tryGet("minecraft:food");
+---
+
+<FactSheetRoot>
+  {
+    food && (
+      <>
+        <FactSheetRow>
+          <FactSheetCell key>Hunger replenishment</FactSheetCell>
+          <FactSheetCell value>{food.nutrition}</FactSheetCell>
+        </FactSheetRow>
+        <FactSheetRow>
+          <FactSheetCell key>Hunger saturation</FactSheetCell>
+          <FactSheetCell value>{food.saturation}</FactSheetCell>
+        </FactSheetRow>
+      </>
+    )
+  }
+</FactSheetRoot>

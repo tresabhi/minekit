@@ -8,6 +8,7 @@ import { unqualify } from "../../../game/unqualify";
 import { vfs } from "../../../game/vfs";
 import { getStrings } from "../../../i18n/getStrings";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import type { ItemSectionShouldRenderContext } from "../../../types/itemSectionConfig";
 import { itemSections } from "../../../ui/itemSections.astro";
 import { getStaticPaths as _getStaticPaths } from "../index.astro";
 
@@ -32,8 +33,11 @@ const strings = await getStrings(locale);
   </Heading>
 
   {
-    itemSections.map((section) => {
-      if (!section.shouldRender()) return null;
+    itemSections.map(async (section) => {
+      const components = await vfs.components(unqualified);
+      const context: ItemSectionShouldRenderContext = { id, components };
+
+      if (!(await section.shouldRender(context))) return null;
 
       return (
         <Flex column gap="2">
@@ -45,7 +49,7 @@ const strings = await getStrings(locale);
             }
           </Heading>
 
-          <section.renderer {locale} {id} />
+          <section.renderer {locale} {id} {unqualified} {components} />
         </Flex>
       );
     })

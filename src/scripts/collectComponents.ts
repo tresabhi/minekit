@@ -15,7 +15,10 @@ for (const item of items) {
 
   if (!components.has(type as ComponentName)) continue;
 
-  collection.push(components.get(type as ComponentName));
+  collection.push({
+    "mcidx:name": name,
+    ...components.get(type as ComponentName),
+  });
 }
 
-await writeFile("temp/components.json", JSON.stringify(collection));
+await writeFile("temp/components.json", JSON.stringify(collection, null, 2));
