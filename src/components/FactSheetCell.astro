@@ -11,6 +11,12 @@ const { key, value, class: className, ...props } = Astro.props;
 
 <style>
   .cell {
+    padding: var(--u2);
+    text-align: right;
+
+    th& {
+      text-align: left;
+    }
   }
 </style>
 

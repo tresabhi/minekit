@@ -1,5 +1,6 @@
 <style is:global>
   @import "@radix-ui/colors/slate-dark.css";
+  @import "@radix-ui/colors/slate-dark-alpha.css";
   @import "@radix-ui/colors/cyan-dark.css";
   @import "@radix-ui/colors/cyan-dark-alpha.css";
 
@@ -17,6 +18,9 @@
 
     --u-vanilla-scale: calc(100vw / var(--n));
     --u-macro-scale: calc(var(--u-vanilla-scale) * 2);
+
+    /* u0 should be close to 1px */
+    /* 16x --u-vanilla-scale should be close to base font size */
 
     --u0: var(--u-macro-scale);
     --u1: calc(var(--u0) * 2);
@@ -39,6 +43,19 @@
     --gray-10: var(--slate-10);
     --gray-11: var(--slate-11);
     --gray-12: var(--slate-12);
+
+    --gray-a1: var(--slate-a1);
+    --gray-a2: var(--slate-a2);
+    --gray-a3: var(--slate-a3);
+    --gray-a4: var(--slate-a4);
+    --gray-a5: var(--slate-a5);
+    --gray-a6: var(--slate-a6);
+    --gray-a7: var(--slate-a7);
+    --gray-a8: var(--slate-a8);
+    --gray-a9: var(--slate-a9);
+    --gray-a10: var(--slate-a10);
+    --gray-a11: var(--slate-a11);
+    --gray-a12: var(--slate-a12);
 
     --accent-1: var(--cyan-1);
     --accent-2: var(--cyan-2);
