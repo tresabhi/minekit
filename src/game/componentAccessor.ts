@@ -5,7 +5,7 @@ import type {
 } from "../types/components";
 
 export class ComponentAccessor {
-  private components: Partial<ComponentsMap>;
+  components: Partial<ComponentsMap>;
 
   constructor(
     components: Components,

@@ -3,13 +3,16 @@
   "type": "module",
   "version": "1.0.0-beta.1",
   "scripts": {
+    "check": "astro check",
     "dev": "astro dev",
     "build": "astro build",
     "astro": "astro",
     "setup-game": "bun src/scripts/setupGame.ts",
-    "collect-components": "bun src/scripts/collectComponents.ts"
+    "collect-components": "bun src/scripts/collectComponents.ts",
+    "setup-components": "SSR=true bun src/scripts/setupComponents.ts"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.9",
     "@fontsource/adwaita-sans": "^5.2.1",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@radix-ui/colors": "^3.0.0",
@@ -17,6 +20,8 @@
     "@types/lodash-es": "^4.17.12",
     "astro": "^7.0.7",
     "lodash-es": "^4.18.1",
-    "prettier": "^3.9.4"
+    "prettier": "^3.9.4",
+    "typescript": "^7.0.2",
+    "zod": "^4.4.3"
   }
 }
