@@ -30,6 +30,9 @@ for (const item of items) {
 await rm(writeRoot, { recursive: true });
 await mkdir(writeRoot, { recursive: true });
 
+let indexImports = "";
+let indexEntries = "";
+
 let i = 0;
 for (const [id, samples] of observations) {
   if (i++ === 3) break;
@@ -48,6 +51,9 @@ for (const [id, samples] of observations) {
   content += ";\n";
 
   content = await format(content, { parser: "typescript" });
+
+  indexImports += `import { ${name} } from "./${unqualified}";\n`;
+  indexEntries += `  "${id}": ${name},\n`;
 
   await writeFile(path, content);
 }
@@ -97,3 +103,12 @@ function inferSchema(sample: unknown) {
 
   throw new Error(`Unhandled type ${type}`);
 }
+
+let indexContent = "";
+
+indexContent += `${indexImports}\n`;
+indexContent += "export const componentSchemas = {\n";
+indexContent += indexEntries;
+indexContent += "};\n\n";
+
+await writeFile(`${writeRoot}/index.ts`, indexContent);
