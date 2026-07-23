@@ -1,5 +1,6 @@
 import { camelCase, upperFirst } from "lodash-es";
 import { mkdir, rm, writeFile } from "node:fs/promises";
+import { dirname } from "node:path";
 import { format } from "prettier";
 import { type LanguageName } from "quicktype-core";
 import { unqualify } from "../game/unqualify";
@@ -35,8 +36,6 @@ let indexEntries = "";
 
 let i = 0;
 for (const [id, samples] of observations) {
-  if (i++ === 3) break;
-
   const unqualified = unqualify(id);
   const name = upperFirst(camelCase(unqualified));
 
@@ -55,6 +54,7 @@ for (const [id, samples] of observations) {
   indexImports += `import { ${name} } from "./${unqualified}";\n`;
   indexEntries += `  "${id}": ${name},\n`;
 
+  await mkdir(dirname(path), { recursive: true });
   await writeFile(path, content);
 }
 
