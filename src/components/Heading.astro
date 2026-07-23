@@ -10,17 +10,18 @@ const { size = "1", minecraft } = Astro.props;
 <style>
   .heading {
     font-weight: var(--weight-bold);
+    font-family: var(--font-regular);
 
     &[data-size="1"] {
-      font-size: calc(3 * var(--u2));
+      font-size: calc(3 * var(--u-rem));
     }
 
     &[data-size="2"] {
-      font-size: calc(2 * var(--u2));
+      font-size: calc(2 * var(--u-rem));
     }
 
     &[data-minecraft="true"] {
-      font-family: Minecraft;
+      font-family: var(--font-minecraft);
     }
   }
 </style>

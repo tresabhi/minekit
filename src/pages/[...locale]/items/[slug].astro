@@ -41,7 +41,7 @@ const strings = await getStrings(locale);
       if (!(await section.shouldRender(context))) return null;
 
       return (
-        <Flex column gap="2">
+        <Flex column gap="4">
           <Heading size="2">
             {
               strings.items.sections[

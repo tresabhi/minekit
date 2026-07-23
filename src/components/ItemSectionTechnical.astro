@@ -31,9 +31,11 @@ const formattedComponents = components
     </FactSheetCell>
 
     <FactSheetCell>
-      <Badge>
-        <Code>{id}</Code>
-      </Badge>
+      <Flex>
+        <Badge>
+          <Code>{id}</Code>
+        </Badge>
+      </Flex>
     </FactSheetCell>
   </FactSheetRow>
 
@@ -43,9 +45,11 @@ const formattedComponents = components
     </FactSheetCell>
 
     <FactSheetCell>
-      <Badge>
-        <Code>{slug}</Code>
-      </Badge>
+      <Flex>
+        <Badge>
+          <Code>{slug}</Code>
+        </Badge>
+      </Flex>
     </FactSheetCell>
   </FactSheetRow>
 
@@ -57,7 +61,7 @@ const formattedComponents = components
         </FactSheetCell>
 
         <FactSheetCell>
-          <Flex wrap gap="1">
+          <Flex wrap gap="3">
             {formattedTags.map((tag) => (
               <Badge>
                 <Code>{tag}</Code>
@@ -75,7 +79,7 @@ const formattedComponents = components
     </FactSheetCell>
 
     <FactSheetCell>
-      <Flex wrap gap="1">
+      <Flex wrap gap="3">
         {
           formattedComponents.map((tag) => (
             <Badge>

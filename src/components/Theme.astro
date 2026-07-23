@@ -13,23 +13,19 @@
   }
 
   :root {
-    --base-u: 0.125rem;
-    --n: round(down, 100vw / var(--base-u));
-
-    --u-vanilla-scale: calc(100vw / var(--n));
-    --u-macro-scale: calc(var(--u-vanilla-scale) * 2);
-
-    /* u0 should be close to 1px */
-    /* 16x --u-vanilla-scale should be close to base font size */
-
-    --u0: var(--u-macro-scale);
+    --u0: 0.0625rem;
     --u1: calc(var(--u0) * 2);
     --u2: calc(var(--u1) * 2);
     --u3: calc(var(--u2) * 2);
     --u4: calc(var(--u3) * 2);
     --u5: calc(var(--u4) * 2);
+    --u6: calc(var(--u5) * 2);
+    --u7: calc(var(--u6) * 2);
 
-    --page-width: calc(80 * var(--u2));
+    --u-rem: var(--u4);
+    --u-vanilla: calc(var(--u-rem) / 16);
+
+    --page-width: calc(80 * var(--u-rem));
 
     --gray-1: var(--slate-1);
     --gray-2: var(--slate-2);
@@ -86,7 +82,10 @@
     --weight-bold: 700;
     --weight-black: 900;
 
+    --font-regular: "Adwaita Sans";
+    --font-mono: "JetBrains Mono", monospace;
+    --font-minecraft: "Minecraft";
+
     color: var(--gray-12);
-    font-family: "Adwaita Sans";
   }
 </style>

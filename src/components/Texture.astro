@@ -17,7 +17,7 @@ const { resolution, class: className, ...props } = Astro.props;
 <img
   class:list={["texture", className]}
   style={resolution
-    ? `width: calc(${resolution} * var(--u-vanilla-scale));`
+    ? `width: calc(${resolution} * var(--u-vanilla));`
     : undefined}
   {...props}
 />

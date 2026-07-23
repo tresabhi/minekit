@@ -10,8 +10,11 @@ const { header, class: className, ...props } = Astro.props;
 
 <style>
   .cell {
-    padding: var(--u2);
+    padding: var(--u4);
     vertical-align: top;
+
+    font-family: var(--font-regular);
+    font-size: var(--u-rem);
 
     th& {
       text-align: left;

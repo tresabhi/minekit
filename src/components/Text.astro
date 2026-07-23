@@ -8,7 +8,8 @@ const { minecraft } = Astro.props;
 
 <style>
   .text {
-    font-size: var(--u2);
+    font-size: var(--u-rem);
+    font-family: var(--font-regular);
 
     &[data-minecraft="true"] {
       font-family: Minecraft;
@@ -16,6 +17,6 @@ const { minecraft } = Astro.props;
   }
 </style>
 
-<span class="text">
+<span class="text" data-minecraft={minecraft}>
   <slot />
 </span>
