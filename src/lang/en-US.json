@@ -8,6 +8,8 @@
 
       "technical": {
         "title": "Technical Jargon",
+        "id": "ID",
+        "slug": "Slug",
         "tags": "Tags",
         "components": "Components"
       }

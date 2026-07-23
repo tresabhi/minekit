@@ -17,6 +17,7 @@ export const getStaticPaths = mixStaticPaths(_getStaticPaths, () =>
 );
 
 const { locale, id } = Astro.props;
+const { slug } = Astro.params;
 
 const unqualified = unqualify(id);
 
@@ -49,7 +50,7 @@ const strings = await getStrings(locale);
             }
           </Heading>
 
-          <section.renderer {locale} {id} {unqualified} {components} />
+          <section.renderer {slug} {locale} {id} {unqualified} {components} />
         </Flex>
       );
     })

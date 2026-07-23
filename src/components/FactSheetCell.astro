@@ -2,17 +2,16 @@
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"th" | "td"> {
-  key?: boolean;
-  value?: boolean;
+  header?: boolean;
 }
 
-const { key, value, class: className, ...props } = Astro.props;
+const { header, class: className, ...props } = Astro.props;
 ---
 
 <style>
   .cell {
     padding: var(--u2);
-    text-align: right;
+    vertical-align: top;
 
     th& {
       text-align: left;
@@ -21,7 +20,7 @@ const { key, value, class: className, ...props } = Astro.props;
 </style>
 
 {
-  key && (
+  header && (
     <th class:list={["cell", className]} {...props}>
       <slot />
     </th>
@@ -29,7 +28,7 @@ const { key, value, class: className, ...props } = Astro.props;
 }
 
 {
-  value && (
+  !header && (
     <td class:list={["cell", className]} {...props}>
       <slot />
     </td>

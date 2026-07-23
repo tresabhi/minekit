@@ -5,6 +5,7 @@ import FactSheetCell from "./FactSheetCell.astro";
 import FactSheetRoot from "./FactSheetRoot.astro";
 import FactSheetRow from "./FactSheetRow.astro";
 import Flex from "./Flex.astro";
+import Text from "./Text.astro";
 import Texture from "./Texture.astro";
 
 type Props = ItemSectionProps;
@@ -32,11 +33,11 @@ const food = components.tryGet("minecraft:food");
     food && (
       <>
         <FactSheetRow>
-          <FactSheetCell key>Hunger replenishment</FactSheetCell>
-          <FactSheetCell value>
-            {/* {food.nutrition} */}
-
+          <FactSheetCell header>Hunger replenishment</FactSheetCell>
+          <FactSheetCell>
             <Flex>
+              <Text>{food.nutrition}</Text>
+
               {food.nutrition % 2 === 1 && (
                 <div class="food-full">
                   <Texture
@@ -68,8 +69,8 @@ const food = components.tryGet("minecraft:food");
           </FactSheetCell>
         </FactSheetRow>
         <FactSheetRow>
-          <FactSheetCell key>Hunger saturation</FactSheetCell>
-          <FactSheetCell value>{food.saturation}</FactSheetCell>
+          <FactSheetCell header>Hunger saturation</FactSheetCell>
+          <FactSheetCell>{food.saturation}</FactSheetCell>
         </FactSheetRow>
       </>
     )

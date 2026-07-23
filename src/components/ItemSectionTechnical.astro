@@ -4,12 +4,14 @@ import { getStrings } from "../i18n/getStrings";
 import type { ItemSectionProps } from "../types/itemSectionProps";
 import Badge from "./Badge.astro";
 import Code from "./Code.astro";
+import FactSheetCell from "./FactSheetCell.astro";
+import FactSheetRoot from "./FactSheetRoot.astro";
+import FactSheetRow from "./FactSheetRow.astro";
 import Flex from "./Flex.astro";
-import Text from "./Text.astro";
 
 type Props = ItemSectionProps;
 
-const { locale, id, components } = Astro.props;
+const { locale, id, components, slug } = Astro.props;
 
 const strings = await getStrings(locale);
 const itemTags = new TagAccessor("item");
@@ -22,34 +24,66 @@ const formattedComponents = components
   .sort((a, b) => a.localeCompare(b, locale));
 ---
 
-{
-  formattedTags.length > 0 && (
-    <Flex column gap="1">
-      <Text>{strings.items.sections.technical.tags}</Text>
+<FactSheetRoot>
+  <FactSheetRow>
+    <FactSheetCell header>
+      {strings.items.sections.technical.id}
+    </FactSheetCell>
 
+    <FactSheetCell>
+      <Badge>
+        <Code>{id}</Code>
+      </Badge>
+    </FactSheetCell>
+  </FactSheetRow>
+
+  <FactSheetRow>
+    <FactSheetCell header>
+      {strings.items.sections.technical.slug}
+    </FactSheetCell>
+
+    <FactSheetCell>
+      <Badge>
+        <Code>{slug}</Code>
+      </Badge>
+    </FactSheetCell>
+  </FactSheetRow>
+
+  {
+    formattedTags.length > 0 && (
+      <FactSheetRow>
+        <FactSheetCell header>
+          {strings.items.sections.technical.tags}
+        </FactSheetCell>
+
+        <FactSheetCell>
+          <Flex wrap gap="1">
+            {formattedTags.map((tag) => (
+              <Badge>
+                <Code>{tag}</Code>
+              </Badge>
+            ))}
+          </Flex>
+        </FactSheetCell>
+      </FactSheetRow>
+    )
+  }
+
+  <FactSheetRow>
+    <FactSheetCell header>
+      {strings.items.sections.technical.components}
+    </FactSheetCell>
+
+    <FactSheetCell>
       <Flex wrap gap="1">
-        {formattedTags.map((tag) => (
-          <Badge>
-            <Code>{tag}</Code>
-          </Badge>
-        ))}
+        {
+          formattedComponents.map((tag) => (
+            <Badge>
+              <Code>{tag}</Code>
+            </Badge>
+          ))
+        }
       </Flex>
-    </Flex>
-  )
-}
-
-<Flex column gap="1">
-  <Text>
-    {strings.items.sections.technical.components}
-  </Text>
-
-  <Flex wrap gap="1">
-    {
-      formattedComponents.map((tag) => (
-        <Badge>
-          <Code>{tag}</Code>
-        </Badge>
-      ))
-    }
-  </Flex>
-</Flex>
+    </FactSheetCell>
+  </FactSheetRow>
+</FactSheetRoot>
