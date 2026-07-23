@@ -1,9 +1,11 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<"img">;
+type Props = HTMLAttributes<"img"> & {
+  resolution?: string;
+};
 
-const { props } = Astro;
+const { resolution, class: className, ...props } = Astro.props;
 ---
 
 <style>
@@ -12,4 +14,10 @@ const { props } = Astro;
   }
 </style>
 
-<img class="texture" {...props} />
+<img
+  class:list={["texture", className]}
+  style={resolution
+    ? `width: calc(${resolution} * var(--u-vanilla-scale));`
+    : undefined}
+  {...props}
+/>

@@ -1,15 +1,22 @@
 ---
-interface Props {
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"th" | "td"> {
   key?: boolean;
   value?: boolean;
 }
 
-const { key, value } = Astro.props;
+const { key, value, class: className, ...props } = Astro.props;
 ---
+
+<style>
+  .cell {
+  }
+</style>
 
 {
   key && (
-    <th>
+    <th class:list={["cell", className]} {...props}>
       <slot />
     </th>
   )
@@ -17,7 +24,7 @@ const { key, value } = Astro.props;
 
 {
   value && (
-    <td>
+    <td class:list={["cell", className]} {...props}>
       <slot />
     </td>
   )
